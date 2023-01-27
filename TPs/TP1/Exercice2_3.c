@@ -7,7 +7,7 @@ int main()
 {
     unsigned n;
 
-    printf("Enter a number: ");
+    printf("Entrez un entier : ");
     scanf("%u", &n);
 
     fact(n);

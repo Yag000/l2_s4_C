@@ -3,6 +3,20 @@
 
 #define N 27
 
+unsigned syracuse(unsigned n);
+
+int main()
+{
+    // printf("%u : %u", N, syracuse(N)); Exercice 3.2
+
+    for (unsigned i = 1; i <= N; ++i)
+    {
+        printf("%u : %u\n", i, syracuse(i));
+    }
+
+    return EXIT_SUCCESS;
+}
+
 unsigned syracuse(unsigned n)
 {
     // printf("%u ", n); Exercice 3.1
@@ -18,17 +32,4 @@ unsigned syracuse(unsigned n)
     }
 
     return 1 + syracuse(3 * n + 1);
-}
-
-int main()
-{
-
-    // printf("%u : %u", N, syracuse(N)); Exercice 3.2
-
-    for (unsigned i = 1; i <= N; ++i)
-    {
-        printf("%u : %u\n", i, syracuse(i));
-    }
-
-    return EXIT_SUCCESS;
 }

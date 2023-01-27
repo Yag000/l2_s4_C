@@ -14,6 +14,7 @@ int main()
 
     printf("------- Test de la fonction retourne1 -------\n");
 
+    printf("retourne %u : %u\n", 0, retourne1(0));
     printf("retourne %u : %u\n", 1, retourne1(1));
     printf("retourne %u : %u\n", 12, retourne1(12));
     printf("retourne %u : %u\n", 123, retourne1(123));
@@ -23,8 +24,9 @@ int main()
     printf("retourne %u : %u\n", 1234567, retourne1(1234567));
     printf("retourne %u : %u\n", 12345678, retourne1(12345678));
 
-    printf("------- Test de la fonction retourne -------\n");
+    printf("\n------- Test de la fonction sommeChiffre -------\n");
 
+    printf("retourne %u : %u\n", 0, sommeChiffre(0));
     printf("sommeChiffre %u : %u\n", 1, sommeChiffre(1));
     printf("sommeChiffre %u : %u\n", 12, sommeChiffre(12));
     printf("sommeChiffre %u : %u\n", 123, sommeChiffre(123));
@@ -34,20 +36,21 @@ int main()
     printf("sommeChiffre %u : %u\n", 1234567, sommeChiffre(1234567));
     printf("sommeChiffre %u : %u\n", 12345678, sommeChiffre(12345678));
 
-    printf("------- Test de la fonction estNarcissique -------\n");
+    printf("\n------- Test de la fonction estNarcissique -------\n");
 
     printf("estNarcissique %u : %s\n", 1, estNarcissique(1) ? "true" : "false");
     printf("estNarcissique %u : %s\n", 2, estNarcissique(2) ? "true" : "false");
     printf("estNarcissique %u : %s\n", 153, estNarcissique(153) ? "true" : "false");
     printf("estNarcissique %u : %s\n", 154, estNarcissique(154) ? "true" : "false");
 
-    printf("------- Test de la fonction afficheNarcissique -------\n");
+    printf("\n------- Test de la fonction afficheNarcissique -------\n");
 
     printf("afficheNarcissique %u : ", 1000);
     afficheNarcissique(1000);
 
-    printf("------- Test de la fonction retourne2 -------\n");
+    printf("\n------- Test de la fonction retourne2 -------\n");
 
+    printf("retourne %u : %u\n", 0, retourne2(0));
     printf("retourne %u : %u\n", 1, retourne2(1));
     printf("retourne %u : %u\n", 12, retourne2(12));
     printf("retourne %u : %u\n", 123, retourne2(123));
@@ -63,6 +66,11 @@ int main()
 unsigned retourne1(unsigned n)
 {
     unsigned retour = 0;
+
+    if (n == 0)
+    {
+        return 1;
+    }
 
     while (n > 0)
     {
@@ -90,7 +98,7 @@ bool estNarcissique(unsigned n)
 {
     unsigned tmp = n, somme = 0;
 
-    while (tmp > 0)
+    while (tmp > 0 && somme <= n)
     {
         somme += cube(tmp % 10);
         tmp /= 10;

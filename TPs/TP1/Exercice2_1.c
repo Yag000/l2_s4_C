@@ -5,7 +5,7 @@ int main()
 {
     unsigned n;
 
-    printf("Enter a number: ");
+    printf("Entrez un entier : ");
     scanf("%u", &n);
 
     unsigned acc = 0;
@@ -15,7 +15,7 @@ int main()
         acc += i * i * i;
     }
 
-    printf("Sum of the first %u cubes: %u\n", n, acc);
+    printf("La somme des %u premiers cubes: %u\n", n, acc);
 
     return EXIT_SUCCESS;
 }

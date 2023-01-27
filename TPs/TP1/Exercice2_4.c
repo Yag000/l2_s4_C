@@ -3,29 +3,24 @@
 
 int main()
 {
-    unsigned number = 0, sum = 0, numberOfInputs = 0;
+    unsigned number = 0, sum = 0, numberOfInputs = -1;
 
-    while (1)
+    do
     {
         printf("Entrez un entier : ");
         scanf("%u", &number);
 
-        if (number == 0)
-        {
-            break;
-        }
-
         sum += number;
         ++numberOfInputs;
-    }
+    } while (number != 0);
 
     if (numberOfInputs == 0)
     {
-        printf("No input\n");
+        printf("Pas de input\n");
     }
     else
     {
-        printf("La moyenne vaut : %f\n", numberOfInputs, (float)sum / numberOfInputs);
+        printf("La moyenne vaut : %f\n", (float)sum / numberOfInputs);
     }
 
     return EXIT_SUCCESS;
