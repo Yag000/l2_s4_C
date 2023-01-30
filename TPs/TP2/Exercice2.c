@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define SUP 1000
 
@@ -16,7 +17,7 @@ int main(int argc, char const *argv[])
     remplissage(T, SUP);
     afficheNbPremier(T, SUP);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void initialisation(bool T[], size_t n)

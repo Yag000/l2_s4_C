@@ -1,6 +1,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 
 void somme(int T[], int S[], size_t b);
 void permute(int T[], size_t n);
@@ -16,7 +17,8 @@ int main()
 
     testSomme();
     testPermute();
-    return 0;
+
+    return EXIT_SUCCESS;
 }
 
 void somme(int T[], int S[], size_t b)

@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 
 unsigned f(unsigned n);
 
@@ -12,7 +13,7 @@ int main(int argc, char const *argv[])
     printf("f(1) : %d\n", f(1));
     printf("f(20) : %d\n", f(20));
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 unsigned f(unsigned n)
