@@ -11,6 +11,7 @@ int main(int argc, char const *argv[])
 
     printf("f(0) : %d\n", f(0));
     printf("f(1) : %d\n", f(1));
+    printf("f(2) : %d\n", f(2));
     printf("f(20) : %d\n", f(20));
 
     return EXIT_SUCCESS;
