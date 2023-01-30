@@ -4,6 +4,7 @@
 # Object files
 *.o
 *.k
+*.ko
 *.obj
 *.elf
 
@@ -50,7 +51,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.confo
+dkms.conf
 
 
 #VSCode
 .vscode/
+*.tar
