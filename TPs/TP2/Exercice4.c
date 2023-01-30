@@ -28,6 +28,7 @@ void testIsInt();
 void testSum();
 void testSub();
 void testMul();
+void testReduce();
 
 int main(int argc, char const *argv[])
 {
@@ -81,6 +82,13 @@ fraction mul(fraction f, fraction g)
 fraction reduce(fraction f)
 {
     int p = pgcd(f.num, f.den);
+
+    if (f.den < 0)
+    {
+        f.num = -f.num;
+        f.den = -f.den;
+    }
+
     fraction g = {f.num / p, f.den / p};
     return g;
 }
@@ -170,17 +178,27 @@ void testReduce()
 {
     fraction f = build(2, 4);
     fraction g = build(1, 2);
-
     assert(eq_fraction(reduce(f), g));
 
     f = build(2, 3);
     g = build(2, 3);
-
     assert(eq_fraction(reduce(f), g));
 
     f = build(6, 4);
     g = build(3, 2);
-
     assert(eq_fraction(reduce(f), g));
+
+    f = build(2, -4);
+    g = build(-1, 2);
+    assert(eq_fraction(reduce(f), g));
+
+    f = build(-2, 4);
+    g = build(-1, 2);
+    assert(eq_fraction(reduce(f), g));
+
+    f = build(-2, -4);
+    g = build(1, 2);
+    assert(eq_fraction(reduce(f), g));
+
     puts("Test reduce passed");
 }
