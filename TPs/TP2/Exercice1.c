@@ -16,6 +16,7 @@ int main()
 {
 
     testSomme();
+    puts("");
     testPermute();
 
     return EXIT_SUCCESS;
@@ -94,7 +95,7 @@ void testSommeHelper(int n)
 void testPermute()
 {
 
-    puts("------ Test de la fonction somme ------");
+    puts("------ Test de la fonction permute ------");
 
     puts("Test 0");
     testPermuteHelper(0);
