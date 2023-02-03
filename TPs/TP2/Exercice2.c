@@ -9,7 +9,7 @@ void initialisation(bool T[], size_t n);
 void remplissage(bool T[], size_t n);
 void afficheNbPremier(bool T[], size_t n);
 
-int main(int argc, char const *argv[])
+int main()
 {
 
     bool T[SUP] = {true};

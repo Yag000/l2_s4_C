@@ -6,7 +6,7 @@ unsigned f(unsigned n);
 
 unsigned g(unsigned n);
 
-int main(int argc, char const *argv[])
+int main()
 {
 
     printf("f(0) : %d\n", f(0));
