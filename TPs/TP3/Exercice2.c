@@ -14,26 +14,24 @@ typedef struct polynome polynome;
 int eval(polynome p, int valeur);
 void printPoly(polynome p);
 void printPoly(polynome p);
-void testPoly();
+polynome derive(polynome p);
+polynome somme(polynome p1, polynome p2);
+polynome multiplication(polynome p1, polynome p2);
+
+void testEval();
+void testPrintPoly();
+void testDerive();
+void testSomme();
+void testMultiplication();
 
 int main()
 {
-    polynome p;
-    p.de = 5;
-    p.co[0] = 0;
-    p.co[1] = 1;
-    p.co[2] = 2;
-    p.co[3] = 3;
-    p.co[4] = 4;
-    p.co[5] = 5;
+    testEval();
+    testPrintPoly();
+    testDerive();
+    testSomme();
+    testMultiplication();
 
-    printf("Valeur : %d\n", eval(p, 1));
-    puts("");
-    printPoly(p);
-
-    puts("--------------------");
-
-    testPoly();
     return EXIT_SUCCESS;
 }
 
@@ -60,9 +58,8 @@ void printPoly(polynome p)
         }
         if (i != 0)
         {
-            printf(" + ");
+            printf(p.co[power] < 0 ? " " : " + ");
         }
-
         if (p.co[power] != 1 || power == 0)
         {
             printf("%d", p.co[power]);
@@ -92,8 +89,71 @@ polynome derive(polynome p)
     return p2;
 }
 
-void testPoly()
+polynome somme(polynome p1, polynome p2)
 {
+    polynome p3;
+    p3.de = p1.de > p2.de ? p1.de : p2.de;
+    for (int i = 0; i <= p3.de; ++i)
+    {
+        if (i > p1.de)
+        {
+            p3.co[i] = p2.co[i];
+            continue;
+        }
+        if (i > p2.de)
+        {
+            p3.co[i] = p1.co[i];
+            continue;
+        }
+
+        p3.co[i] = p1.co[i] + p2.co[i];
+    }
+
+    return p3;
+}
+
+polynome multiplication(polynome p1, polynome p2)
+{
+    polynome p3;
+    p3.de = p1.de + p2.de;
+    for (int i = 0; i <= p3.de; ++i)
+    {
+        p3.co[i] = 0;
+    }
+
+    for (int i = 0; i <= p1.de; ++i)
+    {
+        for (int j = 0; j <= p2.de; ++j)
+        {
+            p3.co[i + j] += p1.co[i] * p2.co[j];
+        }
+    }
+
+    return p3;
+}
+
+void testEval()
+{
+
+    puts("-------- Test de la fonction eval --------");
+
+    polynome p1;
+    p1.de = 5;
+    p1.co[0] = 0;
+    p1.co[1] = 1;
+    p1.co[2] = 2;
+    p1.co[3] = 3;
+    p1.co[4] = 4;
+    p1.co[5] = 5;
+
+    printPoly(p1);
+    printf("évalué en 10 vaut: %d\n", eval(p1, 10));
+}
+
+void testPrintPoly()
+{
+
+    puts("-------- Test de la fonction printPoly --------");
 
     polynome p1;
     p1.de = 5;
@@ -133,4 +193,80 @@ void testPoly()
     p6.co[2] = 2;
 
     printPoly(p6);
+
+    puts("-------- Fin du test de la fonction printPoly --------");
+}
+
+void testDerive()
+{
+
+    puts(" -------- Test de la fonction derive --------");
+
+    polynome p1;
+    p1.de = 5;
+    p1.co[0] = 10;
+    p1.co[1] = 1;
+    p1.co[2] = 2;
+    p1.co[3] = 3;
+    p1.co[4] = 4;
+    p1.co[5] = 5;
+
+    printPoly(p1);
+    printPoly(derive(p1));
+
+    puts(" -------- Fin du test de la fonction derive --------");
+}
+
+void testSomme()
+{
+
+    puts("-------- Test de la fonction somme --------");
+
+    polynome p1;
+    p1.de = 5;
+    p1.co[0] = 0;
+    p1.co[1] = 1;
+    p1.co[2] = 2;
+    p1.co[3] = 3;
+    p1.co[4] = 4;
+    p1.co[5] = 5;
+
+    polynome p2;
+    p2.de = 2;
+    p2.co[0] = 1;
+    p2.co[1] = 0;
+    p2.co[2] = 2;
+
+    printPoly(p1);
+    printPoly(p2);
+    printPoly(somme(p1, p2));
+
+    puts("-------- Fin du test de la fonction somme --------");
+}
+
+void testMultiplication()
+{
+
+    puts("-------- Test de la fonction multiplication --------");
+
+    polynome p1;
+    p1.de = 5;
+    p1.co[0] = 0;
+    p1.co[1] = 1;
+    p1.co[2] = 2;
+    p1.co[3] = 3;
+    p1.co[4] = 4;
+    p1.co[5] = 5;
+
+    polynome p2;
+    p2.de = 2;
+    p2.co[0] = 1;
+    p2.co[1] = 0;
+    p2.co[2] = 2;
+
+    printPoly(p1);
+    printPoly(p2);
+    printPoly(multiplication(p1, p2));
+
+    puts("-------- Fin du test de la fonction multiplication --------");
 }
