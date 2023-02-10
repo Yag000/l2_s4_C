@@ -25,6 +25,7 @@ commande com_alea(int num);
 void affiche_com(commande c);
 void affiche_exp(commande t[], size_t taille);
 int nbr_en_cours(commande t[], size_t taille);
+int nbr_en_expediee(commande t[], size_t taille);
 int cout_validees(commande t[], size_t taille);
 void change_prix(commande *c, int newprice);
 void expedie_tout(commande tab[], size_t n);
@@ -52,16 +53,31 @@ int main()
         commandes[i] = com_alea(i + 1);
     }
 
+    puts("-------------- Test affiche_exp --------------");
+    affiche_exp(commandes, NBC);
+    puts("-------------- Fin test affiche_exp --------------\n");
+
+    puts("-------------- Test nbr_en_cours --------------");
+    printf("Commandes en cours : %d\n", nbr_en_cours(commandes, NBC));
+    puts("-------------- Fin test affiche_exp --------------\n");
+
+    puts("-------------- Test cout_validees --------------");
+    printf("Commandes en cours : %d\n", cout_validees(commandes, NBC));
+    puts("-------------- Fin test cout_validees --------------\n");
+
+    puts("-------------- Test change_prix --------------");
     commande c = {.prix_prod = 100};
     change_prix(&c, 200);
     printf("%d\n", c.prix_prod);
+    puts("-------------- Fin test change_prix --------------\n");
 
+    puts("-------------- Test expedie_tout --------------");
     puts("-------------------");
-    affiche_exp(commandes, NBC);
-
+    printf("Commandes expédiées : %d\n", nbr_en_expediee(commandes, NBC));
     expedie_tout(commandes, NBC);
     puts("-------------------");
-    affiche_exp(commandes, NBC);
+    printf("Commandes expédiées : %d\n", nbr_en_expediee(commandes, NBC));
+    puts("-------------- Fin test expedie_tout --------------\n");
 
     return EXIT_SUCCESS;
 }
@@ -116,6 +132,19 @@ int nbr_en_cours(commande t[], size_t taille)
     for (int i = 0; i < taille; i++)
     {
         if (t[i].etat_com == ENCOURS)
+        {
+            nbr++;
+        }
+    }
+    return nbr;
+}
+
+int nbr_en_expediee(commande t[], size_t taille)
+{
+    int nbr = 0;
+    for (int i = 0; i < taille; i++)
+    {
+        if (t[i].etat_com == EXPEDIEE)
         {
             nbr++;
         }

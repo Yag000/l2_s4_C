@@ -39,10 +39,12 @@ int main()
 int eval(polynome p, int x)
 {
     int valeur = 0;
+    int powI = 1;
 
     for (int i = 0; i <= p.de; ++i)
     {
-        valeur += p.co[i] * pow(x, i);
+        valeur += p.co[i] * powI;
+        powI *= x;
     }
 
     return valeur;
@@ -57,7 +59,7 @@ void printPoly(polynome p)
         {
             continue;
         }
-        if (i != 0)
+        if (power != p.de)
         {
             printf(p.co[power] < 0 ? " " : " + ");
         }
@@ -163,6 +165,8 @@ void testEval()
     polynome p2 = {3, {1, 4, 0, 3}};
     printPoly(p2);
     printf("évalué en -1 vaut: %d\n", eval(p2, -1));
+
+    puts("-------- Fin du test de la fonction eval --------\n");
 }
 
 void testPrintPoly()
@@ -184,7 +188,7 @@ void testPrintPoly()
     polynome p5 = {0, {2}};
     printPoly(p5);
 
-    puts("-------- Fin du test de la fonction printPoly --------");
+    puts("-------- Fin du test de la fonction printPoly --------\n");
 }
 
 void testDerive()
@@ -202,7 +206,7 @@ void testDerive()
     puts("Dérivée: ");
     printPoly(derive(p2));
 
-    puts("-------- Fin du test de la fonction derive --------");
+    puts("-------- Fin du test de la fonction derive --------\n");
 }
 
 void testSomme()
@@ -239,7 +243,7 @@ void testSomme()
     puts("------------------");
     printPoly(somme(p5, p6));
 
-    puts("-------- Fin du test de la fonction somme --------");
+    puts("-------- Fin du test de la fonction somme --------\n");
 }
 
 void testMultiplication()
@@ -267,5 +271,5 @@ void testMultiplication()
     printPoly(multiplication(p3, p4));
     puts("========================");
 
-    puts("-------- Fin du test de la fonction multiplication --------");
+    puts("-------- Fin du test de la fonction multiplication --------\n");
 }

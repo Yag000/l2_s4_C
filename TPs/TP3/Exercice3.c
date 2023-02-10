@@ -15,6 +15,8 @@ int main()
     double pi = computePi(iterations);
 
     printf("Pi is approximately : %lf\n", pi);
+
+    return EXIT_SUCCESS;
 }
 
 int isInsideUnitDisk(double x, double y)
