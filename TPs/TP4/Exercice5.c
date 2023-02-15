@@ -4,14 +4,17 @@
 #define N 10
 
 void sort(int *t, size_t start, size_t end);
+void sort_ptr(int *start, int *end);
 void swap(int *p, int *q);
 
 void test_sort();
+void test_sort_ptr();
 
 int main()
 {
 
     test_sort();
+    test_sort_ptr();
 
     return EXIT_SUCCESS;
 }
@@ -30,6 +33,21 @@ void sort(int *t, size_t start, size_t end)
     }
 }
 
+void sort_ptr(int *start, int *end)
+{
+
+    for (int *ptr_i = start; ptr_i < end; ptr_i++)
+    {
+        for (int *ptr_j = start; ptr_j < end; ptr_j++)
+        {
+            if (*ptr_j > *(ptr_j + 1))
+            {
+                swap(ptr_j, ptr_j + 1);
+            }
+        }
+    }
+}
+
 void swap(int *p, int *q)
 {
     int temp;
@@ -40,6 +58,8 @@ void swap(int *p, int *q)
 
 void test_sort()
 {
+    puts("------------- Test sort -------------");
+
     int tab[N] = {10, 5, 3, 8, 2, 1, 9, 4, 7, 6};
     for (size_t i = 0; i < N; i++)
     {
@@ -52,4 +72,26 @@ void test_sort()
         printf("%d ", tab[i]);
     }
     puts("");
+
+    puts("------------- End test sort -------------\n");
+}
+
+void test_sort_ptr()
+{
+    puts("------------- Test sort_ptr -------------");
+
+    int tab[N] = {10, 5, 3, 8, 2, 1, 9, 4, 7, 6};
+    for (size_t i = 0; i < N; i++)
+    {
+        printf("%d ", tab[i]);
+    }
+    sort_ptr(tab, tab + N);
+    puts(" => ");
+    for (size_t i = 0; i < N; i++)
+    {
+        printf("%d ", tab[i]);
+    }
+    puts("");
+
+    puts("------------- End test sort_ptr -------------\n");
 }
