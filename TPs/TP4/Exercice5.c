@@ -21,9 +21,9 @@ int main()
 
 void sort(int *t, size_t start, size_t end)
 {
-    for (size_t i = start; i < end; i++)
+    for (size_t i = start; i < end; ++i)
     {
-        for (size_t j = start; j < end; j++)
+        for (size_t j = start; j < end; ++j)
         {
             if (t[j] > t[j + 1])
             {
@@ -36,9 +36,9 @@ void sort(int *t, size_t start, size_t end)
 void sort_ptr(int *start, int *end)
 {
 
-    for (int *ptr_i = start; ptr_i < end; ptr_i++)
+    for (int *ptr_i = start; ptr_i < end; ++ptr_i)
     {
-        for (int *ptr_j = start; ptr_j < end; ptr_j++)
+        for (int *ptr_j = start; ptr_j < end; ++ptr_j)
         {
             if (*ptr_j > *(ptr_j + 1))
             {
@@ -61,13 +61,13 @@ void test_sort()
     puts("------------- Test sort -------------");
 
     int tab[N] = {10, 5, 3, 8, 2, 1, 9, 4, 7, 6};
-    for (size_t i = 0; i < N; i++)
+    for (size_t i = 0; i < N; ++i)
     {
         printf("%d ", tab[i]);
     }
     sort(tab, 0, N - 1);
     puts(" => ");
-    for (size_t i = 0; i < N; i++)
+    for (size_t i = 0; i < N; ++i)
     {
         printf("%d ", tab[i]);
     }
@@ -81,13 +81,13 @@ void test_sort_ptr()
     puts("------------- Test sort_ptr -------------");
 
     int tab[N] = {10, 5, 3, 8, 2, 1, 9, 4, 7, 6};
-    for (size_t i = 0; i < N; i++)
+    for (size_t i = 0; i < N; ++i)
     {
         printf("%d ", tab[i]);
     }
     sort_ptr(tab, tab + N);
     puts(" => ");
-    for (size_t i = 0; i < N; i++)
+    for (size_t i = 0; i < N; ++i)
     {
         printf("%d ", tab[i]);
     }

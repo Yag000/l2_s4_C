@@ -14,7 +14,7 @@ int main()
 
     int tab[] = {1, 2, 3, 4, 5};
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; ++i)
     {
         printf("%d ", tab[i]);
     }
@@ -23,7 +23,7 @@ int main()
 
     swap(&tab[0], &tab[4]);
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; ++i)
     {
         printf("%d ", tab[i]);
     }

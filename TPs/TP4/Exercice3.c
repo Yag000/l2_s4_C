@@ -23,7 +23,7 @@ int main()
 size_t nbr_occ(int *t, size_t nbr, int v)
 {
     size_t count = 0;
-    for (unsigned i = 0; i < nbr; i++)
+    for (unsigned i = 0; i < nbr; ++i)
     {
         if (*(t + i) == v)
         {
@@ -52,7 +52,7 @@ void min_max_op(int *t, size_t nbr, int *pmin, int *pmax)
     int tmpMin = *t;
     int tmpMax = *t;
 
-    for (unsigned i = 0; i < nbr; i++)
+    for (unsigned i = 0; i < nbr; ++i)
     {
         if (*(t + i) < tmpMin)
         {

@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,7 +26,7 @@ size_t occ(int *t, size_t nbr, int v)
         return nbr;
     }
 
-    for (unsigned i = 0; i < nbr; i++)
+    for (unsigned i = 0; i < nbr; ++i)
     {
         if (*(t + i) == v)
         {
@@ -46,7 +44,7 @@ int *occ_ptr(int *t, size_t nbr, int v)
         return NULL;
     }
 
-    for (unsigned i = 0; i < nbr; i++)
+    for (unsigned i = 0; i < nbr; ++i)
     {
         if (*(t + i) == v)
         {
@@ -66,7 +64,7 @@ void test_occ()
 
     int t[N] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    for (unsigned i = 0; i < N; i++)
+    for (unsigned i = 0; i < N; ++i)
     {
         printf("%d ", t[i]);
     }
@@ -90,7 +88,7 @@ void test_occ_ptr()
 
     int t[N] = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
 
-    for (unsigned i = 0; i < N; i++)
+    for (unsigned i = 0; i < N; ++i)
     {
         printf("%d ", t[i]);
     }
