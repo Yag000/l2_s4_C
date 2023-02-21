@@ -11,7 +11,6 @@ void test_occ_ptr();
 
 int main()
 {
-
     test_occ();
     test_occ_ptr();
 
@@ -20,12 +19,6 @@ int main()
 
 size_t occ(int *t, size_t nbr, int v)
 {
-
-    if (nbr == 0)
-    {
-        return nbr;
-    }
-
     for (unsigned i = 0; i < nbr; ++i)
     {
         if (*(t + i) == v)
@@ -38,18 +31,11 @@ size_t occ(int *t, size_t nbr, int v)
 }
 int *occ_ptr(int *t, size_t nbr, int v)
 {
+    size_t i = occ(t, nbr, v);
 
-    if (nbr == 0)
+    if (i < nbr)
     {
-        return NULL;
-    }
-
-    for (unsigned i = 0; i < nbr; ++i)
-    {
-        if (*(t + i) == v)
-        {
-            return t + i;
-        }
+        return t + i;
     }
 
     return NULL;
