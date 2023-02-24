@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 struct array
 {
@@ -138,12 +139,7 @@ array *array_init_from(int *data, size_t length, size_t capacity)
 void array_remove(array *pa, size_t index)
 {
     assert(index < pa->size);
-
-    for (int *ptr = pa->content + index; ptr < pa->content + pa->size - 1; ptr++)
-    {
-        *ptr = *(ptr + 1);
-    }
-
+    memmove(pa->content + index, pa->content + index + 1, (pa->size - index - 1) * sizeof(int));
     pa->size--;
 }
 
@@ -175,10 +171,7 @@ void array_insert(array *pa, size_t index, int value)
         return;
     }
 
-    for (int *ptr = pa->content + pa->size; ptr > pa->content + index; ptr--)
-    {
-        *ptr = *(ptr - 1);
-    }
+    memmove(pa->content + index + 1, pa->content + index, (pa->size - index) * sizeof(int));
 
     *(pa->content + index) = value;
     pa->size++;
