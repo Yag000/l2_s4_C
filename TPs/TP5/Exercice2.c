@@ -22,6 +22,7 @@ void array_print(array *pa);
 
 int *array_search(array *pa, int value);
 array *array_init_from(int *data, size_t length, size_t capacity);
+
 void array_remove(array *pa, size_t index);
 void array_insert(array *pa, size_t index, int value);
 
@@ -146,7 +147,7 @@ void array_remove(array *pa, size_t index)
     pa->size--;
 }
 
-void realloc_array(array *pa)
+void array_realloc(array *pa)
 {
     int *new_content = realloc(pa->content, pa->capacity * 2 * sizeof(int));
     if (new_content == NULL)
@@ -165,7 +166,7 @@ void array_insert(array *pa, size_t index, int value)
 
     if (pa->size == pa->capacity)
     {
-        realloc_array(pa);
+        array_realloc(pa);
     }
 
     if (index == pa->size)
