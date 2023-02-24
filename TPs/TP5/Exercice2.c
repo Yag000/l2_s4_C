@@ -1,6 +1,6 @@
-#include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 struct array
@@ -157,6 +157,7 @@ void realloc_array(array *pa)
     pa->content = new_content;
     pa->capacity *= 2;
 }
+
 void array_insert(array *pa, size_t index, int value)
 {
 
@@ -257,28 +258,43 @@ void test_array_append()
 void test_array_search()
 {
     puts("---------- Test array_search ----------");
-    puts("Expected: 10 9 8 7 6 5 4 3 2 1");
+    puts("Expected: 1 2 3 4 5 6 7 8 9 10");
     printf("Actual: ");
-    array *a = array_init(10);
-    array_append(a, 10);
-    array_append(a, 9);
-    array_append(a, 8);
-    array_append(a, 7);
-    array_append(a, 6);
-    array_append(a, 5);
-    array_append(a, 4);
-    array_append(a, 3);
-    array_append(a, 2);
-    array_append(a, 1);
+    array *a1 = array_init(10);
+    array_append(a1, 10);
+    array_append(a1, 9);
+    array_append(a1, 8);
+    array_append(a1, 7);
+    array_append(a1, 6);
+    array_append(a1, 5);
+    array_append(a1, 4);
+    array_append(a1, 3);
+    array_append(a1, 2);
+    array_append(a1, 1);
     for (size_t i = 0; i < 10; i++)
     {
-        printf("%d ", *array_search(a, i + 1));
+        printf("%d ", *array_search(a1, i + 1));
     }
+    puts("");
 
-    puts("\nExpected: (nil)");
-    printf("Actual: %p ", array_search(a, 11));
+    puts("\n### Test case: Element not found");
+    puts("Expected: (nil)");
+    printf("Actual: %p \n", array_search(a1, 11));
+    array_destroy(a1);
+
+    puts("\n### Test case: FInding the first instance");
+    puts("Expected: true false false");
+    array *a2 = array_init(5);
+    array_append(a1, 2);
+    array_append(a1, 1);
+    array_append(a1, 2);
+    array_append(a1, 1);
+    array_append(a1, 1);
+    printf("%s ", array_search(a2, 1) == a2->content + 1 ? "true" : "false");
+    printf("%s ", array_search(a2, 1) == a2->content + 3 ? "true" : "false");
+    printf("%s ", array_search(a2, 1) == a2->content + 4 ? "true" : "false");
+
     puts("\n----------- End test array_search -----------\n");
-    array_destroy(a);
 }
 
 void test_array_init_from()
@@ -293,9 +309,11 @@ void test_array_init_from()
 
     puts("----------- End test array_init_from -----------\n");
 }
+
 void test_array_remove()
 {
     puts("---------- Test array_remove ----------");
+    puts("### Test case: Removing first element");
     puts("Expected: 2 3 4 5 6 7 8 9 10");
     printf("Actual: ");
     int data[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -303,12 +321,14 @@ void test_array_remove()
     array_remove(a, 0);
     array_print(a);
 
-    puts("\nExpected: 2 3 4 5 6 7 8 9");
+    puts("\n### Test case: Removing last element");
+    puts("Expected: 2 3 4 5 6 7 8 9");
     printf("Actual: ");
     array_remove(a, 8);
     array_print(a);
 
-    puts("\nExpected: 2 3 4 6 7 8 9");
+    puts("\n### Test case: Removing middle element");
+    puts("Expected: 2 3 4 6 7 8 9");
     printf("Actual: ");
     array_remove(a, 3);
     array_print(a);
@@ -316,10 +336,12 @@ void test_array_remove()
 
     puts("----------- End test array_remove -----------\n");
 }
+
 void test_array_insert()
 {
 
     puts("---------- Test array_insert ----------");
+    puts("### Test case: Adding an element at the end and at full capacity");
     puts("Expected: 1 2 3 4 5 6 7 8 9 10 11\nSize: 11\nCapacity: 20");
     printf("Actual: ");
     int data[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -329,21 +351,24 @@ void test_array_insert()
     printf("Size: %zu \n", a->size);
     printf("Capacity: %zu \n", a->capacity);
 
-    puts("\nExpected: 0 1 2 3 4 5 6 7 8 9 10 11\nSize: 12\nCapacity: 20");
+    puts("\n### Test case: Adding an element at the beginning");
+    puts("Expected: 0 1 2 3 4 5 6 7 8 9 10 11\nSize: 12\nCapacity: 20");
     printf("Actual: ");
     array_insert(a, 0, 0);
     array_print(a);
     printf("Size: %zu \n", a->size);
     printf("Capacity: %zu \n", a->capacity);
 
-    puts("\nExpected: 0 1 2 3 4 5 6 7 8 9 10 200 11\nSize: 13\nCapacity: 20");
+    puts("\n### Test case: Adding an element at the second to last index");
+    puts("Expected: 0 1 2 3 4 5 6 7 8 9 10 200 11\nSize: 13\nCapacity: 20");
     printf("Actual: ");
     array_insert(a, 11, 200);
     array_print(a);
     printf("Size: %zu \n", a->size);
     printf("Capacity: %zu \n", a->capacity);
 
-    puts("\nExpected: 0 1 2 3 4 5 300 6 7 8 9 10 200 11\nSize: 14\nCapacity: 20");
+    puts("\n### Test case: Adding an element at the middle");
+    puts("Expected: 0 1 2 3 4 5 300 6 7 8 9 10 200 11\nSize: 14\nCapacity: 20");
     printf("Actual: ");
     array_insert(a, 6, 300);
     array_print(a);
