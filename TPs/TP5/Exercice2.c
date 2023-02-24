@@ -96,20 +96,20 @@ bool array_append(array *pa, int value)
 
 void array_print(array *pa)
 {
-    for (size_t i = 0; i < pa->size; i++)
+    for (int *ptr = pa->content; ptr < pa->content + pa->size; ptr++)
     {
-        printf("%d ", *(pa->content + i));
+        printf("%d ", *ptr);
     }
     puts("");
 }
 
 int *array_search(array *pa, int value)
 {
-    for (size_t i = 0; i < pa->size; i++)
+    for (int *ptr = pa->content; ptr < pa->content + pa->size; ptr++)
     {
-        if (*(pa->content + i) == value)
+        if (*ptr == value)
         {
-            return pa->content + i;
+            return ptr;
         }
     }
 
@@ -126,9 +126,9 @@ array *array_init_from(int *data, size_t length, size_t capacity)
         return NULL;
     }
 
-    for (size_t i = 0; i < length; i++)
+    for (int *ptr = data; ptr < data + length; ptr++)
     {
-        array_append(a, *(data + i));
+        array_append(a, *ptr);
     }
 
     return a;
@@ -138,9 +138,9 @@ void array_remove(array *pa, size_t index)
 {
     assert(index < pa->size);
 
-    for (size_t i = index; i < pa->size - 1; i++)
+    for (int *ptr = pa->content + index; ptr < pa->content + pa->size - 1; ptr++)
     {
-        *(pa->content + i) = *(pa->content + i + 1);
+        *ptr = *(ptr + 1);
     }
 
     pa->size--;
@@ -174,9 +174,9 @@ void array_insert(array *pa, size_t index, int value)
         return;
     }
 
-    for (size_t i = pa->size; i > index; i--)
+    for (int *ptr = pa->content + pa->size; ptr > pa->content + index; ptr--)
     {
-        *(pa->content + i) = *(pa->content + i - 1);
+        *ptr = *(ptr - 1);
     }
 
     *(pa->content + index) = value;
