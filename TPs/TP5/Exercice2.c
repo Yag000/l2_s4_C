@@ -290,6 +290,7 @@ void test_array_search()
     array_append(a1, 2);
     array_append(a1, 1);
     array_append(a1, 1);
+    printf("Actual: ");
     printf("%s ", array_search(a2, 1) == a2->content + 1 ? "true" : "false");
     printf("%s ", array_search(a2, 1) == a2->content + 3 ? "true" : "false");
     printf("%s ", array_search(a2, 1) == a2->content + 4 ? "true" : "false");
