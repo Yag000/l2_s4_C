@@ -75,13 +75,13 @@ void array_destroy(array *pa)
 int array_get(array *pa, size_t index)
 {
     assert(index < pa->size);
-    return *(pa->content + index);
+    return pa->content[index];
 }
 
 void array_set(array *pa, size_t index, int value)
 {
     assert(index < pa->size);
-    *(pa->content + index) = value;
+    pa->content[index] = value;
 }
 
 bool array_append(array *pa, int value)
@@ -91,7 +91,7 @@ bool array_append(array *pa, int value)
         return false;
     }
 
-    *(pa->content + pa->size) = value;
+    pa->content[pa->size] = value;
     pa->size++;
     return true;
 }
@@ -173,7 +173,7 @@ void array_insert(array *pa, size_t index, int value)
 
     memmove(pa->content + index + 1, pa->content + index, (pa->size - index) * sizeof(int));
 
-    *(pa->content + index) = value;
+    pa->content[index] = value;
     pa->size++;
 }
 
