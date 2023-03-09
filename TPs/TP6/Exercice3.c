@@ -13,14 +13,17 @@ typedef struct
 int nboc(const char *s, const char *sub);
 void affiche_mutation(mutation m);
 mutation diff(const char *s, const char *t);
+mutation longest(const char *s, const char *t);
 
 void test_nboc();
 void test_diff();
+void test_longest();
 
 int main()
 {
     test_nboc();
     test_diff();
+    test_longest();
     return EXIT_SUCCESS;
 }
 
@@ -87,6 +90,24 @@ mutation diff(const char *s, const char *t)
     return m;
 }
 
+mutation longest(const char *s, const char *t)
+{
+    mutation m = {0, 0};
+    mutation m2;
+
+    for (size_t i = 0; i < strlen(s); i++)
+    {
+        m2 = diff(s + i, t + i);
+        if (m2.len > m.len)
+        {
+            m = m2;
+            m.indice += i;
+        }
+    }
+
+    return m;
+}
+
 void test_nboc()
 {
     puts("-------------------- Test nboc --------------------");
@@ -118,29 +139,72 @@ void test_diff()
 {
     puts("-------------------- Test diff --------------------");
 
-    char *s = "bonjour";
-    char *t = "bonjouz";
+    char *s = "aaactgc";
+    char *t = "aaactgt";
     mutation m = diff(s, t);
     affiche_mutation(m);
     printf("\t expected: indice: 6, len: 1\n");
 
-    char *s2 = "bonjour";
-    char *t2 = "rtnjouz";
+    char *s2 = "aaactgc";
+    char *t2 = "tgactgc";
     mutation m2 = diff(s2, t2);
     affiche_mutation(m2);
     printf("\t expected: indice: 0, len: 2\n");
 
-    char *s3 = "bonjour";
-    char *t3 = "bonjour";
+    char *s3 = "aaactgc";
+    char *t3 = "aaactgc";
     mutation m3 = diff(s3, t3);
     affiche_mutation(m3);
     printf("\t expected: indice: 0, len: 0\n");
 
-    char *s4 = "bonjour";
-    char *t4 = "tonrtur";
+    char *s4 = "aaactgc";
+    char *t4 = "tacatgc";
     mutation m4 = diff(s4, t4);
     affiche_mutation(m4);
     printf("\t expected: indice: 0, len: 1\n");
 
     puts("-------------------- End Test diff --------------------\n\n");
+}
+
+void test_longest()
+{
+    puts("-------------------- Test longest --------------------");
+
+    char *s = "aaactgc";
+    char *t = "aaactgt";
+    mutation m = longest(s, t);
+    affiche_mutation(m);
+    printf("\t expected: indice: 6, len: 1\n");
+
+    char *s2 = "aaactgc";
+    char *t2 = "tgactgc";
+    mutation m2 = longest(s2, t2);
+    affiche_mutation(m2);
+    printf("\t expected: indice: 0, len: 2\n");
+
+    char *s3 = "aaactgc";
+    char *t3 = "aaactgc";
+    mutation m3 = longest(s3, t3);
+    affiche_mutation(m3);
+    printf("\t expected: indice: 0, len: 0\n");
+
+    char *s4 = "aaactgc";
+    char *t4 = "tacatgc";
+    mutation m4 = longest(s4, t4);
+    affiche_mutation(m4);
+    printf("\t expected: indice: 2, len: 2\n");
+
+    char *s5 = "aaactgc";
+    char *t5 = "tacagat";
+    mutation m5 = longest(s5, t5);
+    affiche_mutation(m5);
+    printf("\t expected: indice: 2, len: 5\n");
+
+    char *s6 = "aaactgc";
+    char *t6 = "taactaa";
+    mutation m6 = longest(s6, t6);
+    affiche_mutation(m6);
+    printf("\t expected: indice: 5, len: 2\n");
+
+    puts("-------------------- End Test longest --------------------\n\n");
 }
