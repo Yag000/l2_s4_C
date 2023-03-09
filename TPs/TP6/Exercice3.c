@@ -14,16 +14,19 @@ int nboc(const char *s, const char *sub);
 void affiche_mutation(mutation m);
 mutation diff(const char *s, const char *t);
 mutation longest(const char *s, const char *t);
+char *longest_string(const char *s, const char *t);
 
 void test_nboc();
 void test_diff();
 void test_longest();
+void test_longest_string();
 
 int main()
 {
     test_nboc();
     test_diff();
     test_longest();
+    test_longest_string();
     return EXIT_SUCCESS;
 }
 
@@ -106,6 +109,18 @@ mutation longest(const char *s, const char *t)
     }
 
     return m;
+}
+
+char *longest_string(const char *s, const char *t)
+{
+    mutation m = longest(s, t);
+    char *sub = malloc(sizeof(char) * (m.len + 1));
+    for (size_t i = 0; i < m.len; i++)
+    {
+        sub[i] = t[m.indice + i];
+    }
+    sub[m.len] = '\0';
+    return sub;
 }
 
 void test_nboc()
@@ -207,4 +222,41 @@ void test_longest()
     printf("\t expected: indice: 5, len: 2\n");
 
     puts("-------------------- End Test longest --------------------\n\n");
+}
+
+void test_longest_string()
+{
+    puts("-------------------- Test longest_string --------------------");
+
+    char *s = "aaactgc";
+    char *t = "aaactgt";
+    char *m = longest_string(s, t);
+    printf("longest_string(%s, %s) = %s (expected: %s) \n", s, t, m, "t");
+
+    char *s2 = "aaactgc";
+    char *t2 = "tgactgc";
+    char *m2 = longest_string(s2, t2);
+    printf("longest_string(%s, %s) = %s (expected: %s) \n", s2, t2, m2, "tg");
+
+    char *s3 = "aaactgc";
+    char *t3 = "aaactgc";
+    char *m3 = longest_string(s3, t3);
+    printf("longest_string(%s, %s) = %s (expected: %s) \n", s3, t3, m3, "");
+
+    char *s4 = "aaactgc";
+    char *t4 = "tacatgc";
+    char *m4 = longest_string(s4, t4);
+    printf("longest_string(%s, %s) = %s (expected: %s) \n", s4, t4, m4, "ca");
+
+    char *s5 = "aaactgc";
+    char *t5 = "tacagat";
+    char *m5 = longest_string(s5, t5);
+    printf("longest_string(%s, %s) = %s (expected: %s) \n", s5, t5, m5, "cagat");
+
+    char *s6 = "aaactgc";
+    char *t6 = "taactaa";
+    char *m6 = longest_string(s6, t6);
+    printf("longest_string(%s, %s) = %s (expected: %s) \n", s6, t6, m6, "aa");
+
+    puts("-------------------- End Test longest_string --------------------\n\n");
 }
