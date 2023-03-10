@@ -98,13 +98,23 @@ mutation longest(const char *s, const char *t)
     mutation m = {0, 0};
     mutation m2;
 
-    for (size_t i = 0; i < strlen(s); i++)
+    int index = 0;
+    while (index < strlen(s))
     {
-        m2 = diff(s + i, t + i);
+        m2 = diff(s + index, t + index);
         if (m2.len > m.len)
         {
             m = m2;
-            m.indice += i;
+            m.indice += index;
+        }
+
+        if (m2.len == 0)
+        {
+            index += 1;
+        }
+        else
+        {
+            index += m2.len;
         }
     }
 
@@ -114,12 +124,11 @@ mutation longest(const char *s, const char *t)
 char *longest_string(const char *s, const char *t)
 {
     mutation m = longest(s, t);
+
     char *sub = malloc(sizeof(char) * (m.len + 1));
-    for (size_t i = 0; i < m.len; i++)
-    {
-        sub[i] = t[m.indice + i];
-    }
+    memmove(sub, t + m.indice, sizeof(char) * (m.len + 1));
     sub[m.len] = '\0';
+
     return sub;
 }
 
@@ -127,13 +136,13 @@ void test_nboc()
 {
     puts("-------------------- Test nboc --------------------");
 
-    char *s = "bonjour";
-    char *sub = "on";
+    char *s = "actccttg";
+    char *sub = "cc";
     int nb = nboc(s, sub);
     printf("nboc(%s, %s) = %d (expected: 1) \n", s, sub, nb);
 
-    char *s2 = "tolotovo";
-    char *sub2 = "to";
+    char *s2 = "cacacttgtctaatc";
+    char *sub2 = "ac";
     int nb2 = nboc(s2, sub2);
     printf("nboc(%s, %s) = %d (expected: 2) \n", s2, sub2, nb2);
 
