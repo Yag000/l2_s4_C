@@ -41,7 +41,8 @@ int main()
 
 char *dupliquer(const char *s)
 {
-    char *s2 = memcpy(malloc(strlen(s) + 1), s, strlen(s) + 1);
+    char *s2 = malloc((strlen(s) + 1) * sizeof(char));
+    memmove(s2, s, (strlen(s) + 1) * sizeof(char));
     return s2;
 }
 
@@ -62,7 +63,17 @@ int ordrealpha(const char *s1, const char *s2)
         s2++;
     }
 
-    return 0;
+    if (strlen(s1) == strlen(s2))
+    {
+        return 0;
+    }
+
+    if (strlen(s1) <= strlen(s2))
+    {
+        return -1;
+    }
+
+    return 1;
 
     // return strcmp(s1, s2);
 }
