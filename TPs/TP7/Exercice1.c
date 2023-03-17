@@ -62,6 +62,17 @@ int word_len(const char *w)
     return word_length;
 }
 
+char *extract_word(const char *w, int *pl)
+{
+    *pl = word_len(w);
+
+    char *res = malloc((*pl) * sizeof(char));
+    memmove(res, w, (*pl) * sizeof(char));
+    res[*pl] = '\0';
+
+    return res;
+}
+
 void test_nbr_words()
 {
     puts("---------------- Test nbr_words ----------------");
@@ -103,11 +114,55 @@ void test_word_len()
     printf("%s adr = s + 11: %d, expected 6\n", s4, word_len(s4 + 11));
 
     char *s5 = "   Hello\t\tworld!  ";
-    printf("%s adr = s + 5: %d, expected 4\n", s5, word_len(s5 + 5));
+    printf("%s adr = s + 5: %d, expected 3\n", s5, word_len(s5 + 5));
+
     char *s6 = " abc d";
     printf("%s , adr = s + 1 : %d, expected 3\n", s6, word_len(s6 + 1));
 
     puts("---------------- End Test word_len ----------------\n\n");
 }
-void test_extract_word() {}
+
+void test_extract_word()
+{
+    puts("---------------- Test extract_word ----------------");
+    int p = 0;
+
+    char *s1 = "Hello world!";
+    char *result1 = extract_word(s1, &p);
+    printf("%s : %s, expected Hello\n", s1, result1);
+    printf("*pl = %d, expected 5\n\n", p);
+    free(result1);
+
+    char *s2 = "world!";
+    char *result2 = extract_word(s2, &p);
+    printf("%s : %s, expected world!\n", s2, result2);
+    printf("*pl = %d, expected 6\n\n", p);
+    free(result2);
+
+    char *s3 = "\t\tHello world!  ";
+    char *result3 = extract_word(s3 + 2, &p);
+    printf("%s adr = s + 2: %s, expected Hello\n", s3, result3);
+    printf("*pl = %d, expected 5\n\n", p);
+    free(result3);
+
+    char *s4 = "   Hello   world!  ";
+    char *result4 = extract_word(s4 + 11, &p);
+    printf("%s adr = s + 11: %s, expected world!\n", s4, result4);
+    printf("*pl = %d, expected 6\n\n", p);
+    free(result4);
+
+    char *s5 = "   Hello\t\tworld!  ";
+    char *result5 = extract_word(s5 + 5, &p);
+    printf("%s adr = s + 5: %s, expected llo\n", s5, result5);
+    printf("*pl = %d, expected 3\n\n", p);
+    free(result5);
+
+    char *s6 = " abc d";
+    char *result6 = extract_word(s6 + 1, &p);
+    printf("%s , adr = s + 1 : %s, expected abc\n", s6, result6);
+    printf("*pl = %d, expected 3\n\n", p);
+    free(result6);
+
+    puts("---------------- End Test extract_word ----------------\n\n");
+}
 void test_next_word() {}
