@@ -40,7 +40,7 @@ int nbr_words(const char *s)
                 continue;
             }
 
-            words_found++;
+            ++words_found;
             is_inside_word = true;
         }
     }
@@ -50,13 +50,13 @@ int nbr_words(const char *s)
 
 int word_len(const char *w)
 {
-    assert(!isspace(w));
+    assert(!isspace(*w));
 
     int word_length = 0;
-    while (!isspace(w) && *w)
+    while (!isspace(*w) && *w)
     {
-        word_length++;
-        w++;
+        ++word_length;
+        ++w;
     }
 
     return word_length;
@@ -97,14 +97,13 @@ void test_word_len()
     printf("%s : %d, expected 6\n", s2, word_len(s2));
 
     char *s3 = "\t\tHello world!  ";
-    printf("%s adr = s + 2: %d, expected 4\n", s3, word_len(s3 + 2));
+    printf("%s adr = s + 2: %d, expected 5\n", s3, word_len(s3 + 2));
 
     char *s4 = "   Hello   world!  ";
-    printf("%s adr = s + 11: %d, expected 2\n", s4, word_len(s4 + 11));
+    printf("%s adr = s + 11: %d, expected 6\n", s4, word_len(s4 + 11));
 
     char *s5 = "   Hello\t\tworld!  ";
-    printf("%s adr = s + 5: %d, expected 3\n", s5, word_len(s5 + 5));
-
+    printf("%s adr = s + 5: %d, expected 4\n", s5, word_len(s5 + 5));
     char *s6 = " abc d";
     printf("%s , adr = s + 1 : %d, expected 3\n", s6, word_len(s6 + 1));
 
