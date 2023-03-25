@@ -18,20 +18,87 @@ void afficher_polynome(polynome *p);
 void ajouter_monome(polynome *p, int c, int d);
 polynome *copie(polynome *p);
 polynome *somme(polynome *p1, polynome *p2);
+polynome *produit_monome(polynome *p, int c, int d);
+polynome *produit(polynome *p1, polynome *p2);
 
 void test_evaluer_polynome();
 void test_afficher_polynome();
 void test_ajouter_monome();
 void test_copie();
 void test_somme();
+void test_produit_monome();
+void test_produit();
 
-int main()
+int main(int argc, char const *argv[])
 {
+    if (argc != 3)
+    {
+        printf("Usage: %s nb_monomes_poly1 nb_monomes_poly2\n", argv[0]);
+        return 1;
+    }
+
+    int nb_monomes1 = atoi(argv[1]);
+    int nb_monomes2 = atoi(argv[2]);
+
+    // Création des polynômes
+    polynome *poly1 = creer_polynome_vide();
+
+    polynome *poly2 = creer_polynome_vide();
+
+    char *question_text = "Entrez le coefficient et le degré du monôme %d du polynôme : ";
+    puts("--------------------------- Polynôme 1 ---------------------------");
+    for (int i = 0; i < nb_monomes1; i++)
+    {
+        int c, d;
+        printf(question_text, i + 1);
+        scanf("%d %d", &c, &d);
+        ajouter_monome(poly1, c, d);
+    }
+
+    puts("--------------------------- Polynôme 2 ---------------------------");
+    for (int i = 0; i < nb_monomes2; i++)
+    {
+        int c, d;
+        printf(question_text, i + 1);
+        scanf("%d %d", &c, &d);
+        ajouter_monome(poly2, c, d);
+    }
+
+    // Affichage des polynômes et de leur somme
+    printf("Premier polynôme : ");
+    afficher_polynome(poly1);
+    printf("\n");
+
+    printf("Deuxième polynôme : ");
+    afficher_polynome(poly2);
+    printf("\n");
+
+    polynome *p_somme = somme(poly1, poly2);
+    printf("Somme des deux polynômes : ");
+    afficher_polynome(p_somme);
+    printf("\n");
+
+    polynome *p_produit = produit(poly1, poly2);
+    printf("Produit des deux polynômes : ");
+    afficher_polynome(p_produit);
+    printf("\n");
+
+    // Destruction des polynômes
+    polynome_destroy(poly1);
+    polynome_destroy(poly2);
+    polynome_destroy(p_somme);
+    polynome_destroy(p_produit);
+
+    puts("--------------------------- Tests ---------------------------");
     test_evaluer_polynome();
     test_afficher_polynome();
     test_ajouter_monome();
     test_copie();
     test_somme();
+    test_produit_monome();
+    test_produit();
+
+    return EXIT_SUCCESS;
 }
 
 polynome *creer_polynome_vide()
@@ -244,6 +311,53 @@ polynome *somme(polynome *p1, polynome *p2)
     }
     return res;
 }
+
+polynome *produit_monome(polynome *p, int c, int d)
+{
+    assert(p != NULL);
+
+    polynome *res = creer_polynome_vide();
+
+    polynome *dernier = res;
+    polynome *courant = p->suiv;
+
+    while (courant != NULL)
+    {
+        polynome *nouveau = malloc(sizeof(polynome));
+        nouveau->coef = courant->coef * c;
+        nouveau->degre = courant->degre + d;
+        nouveau->suiv = NULL;
+
+        dernier->suiv = nouveau;
+        dernier = nouveau;
+
+        courant = courant->suiv;
+    }
+
+    return res;
+}
+
+polynome *produit(polynome *p1, polynome *p2)
+{
+    assert(p1 != NULL);
+    assert(p2 != NULL);
+
+    polynome *res = creer_polynome_vide();
+    polynome *courant = p2->suiv;
+
+    while (courant != NULL)
+    {
+        polynome *produit = produit_monome(p1, courant->coef, courant->degre);
+        polynome *temp = res;
+        res = somme(res, produit);
+        polynome_destroy(temp);
+        polynome_destroy(produit);
+        courant = courant->suiv;
+    }
+
+    return res;
+}
+
 void test_evaluer_polynome()
 {
     puts("--------------- Test evaluer_polynome ---------------\n");
@@ -399,6 +513,63 @@ void test_somme()
     printf(", expected 2X^7 + 4X^6 \n");
 
     polynome_destroy(p);
+    polynome_destroy(p2);
+    polynome_destroy(p3);
+
+    puts("--------------- End of test ---------------\n");
+}
+
+void test_produit_monome()
+{
+    puts("--------------- Test produit_monome ---------------\n");
+    polynome *p = creer_polynome_vide();
+    ajouter_monome(p, 3, 5);
+    ajouter_monome(p, 2, 3);
+    ajouter_monome(p, 1, 2);
+    ajouter_monome(p, 4, 1);
+    ajouter_monome(p, 5, 0);
+
+    printf("Polynome avant multiplication par 2x^3 : ");
+    afficher_polynome(p);
+
+    polynome *p2 = produit_monome(p, 2, 3);
+
+    printf("\nPolynome après multiplication par 2x^3 : ");
+    afficher_polynome(p2);
+    printf(", expected 6X^8 + 4X^6 + 2X^5 + 8X^4 + 10X^3\n");
+
+    polynome_destroy(p);
+    polynome_destroy(p2);
+
+    puts("--------------- End of test ---------------\n");
+}
+
+void test_produit()
+{
+
+    puts("--------------- Test produit ---------------\n");
+
+    polynome *p1 = creer_polynome_vide();
+    ajouter_monome(p1, 3, 2);
+    ajouter_monome(p1, 2, 1);
+    ajouter_monome(p1, 1, 0);
+    printf("p1 = ");
+    afficher_polynome(p1);
+    puts("");
+
+    polynome *p2 = creer_polynome_vide();
+    ajouter_monome(p2, 2, 1);
+    ajouter_monome(p2, 1, 0);
+    printf("p2 = ");
+    afficher_polynome(p2);
+    puts("");
+
+    polynome *p3 = produit(p1, p2);
+    printf("p1 * p2 = ");
+    afficher_polynome(p3);
+    printf(" , expected 6X^3 + 7X^2 + 4X + 1 \n");
+
+    polynome_destroy(p1);
     polynome_destroy(p2);
     polynome_destroy(p3);
 
