@@ -103,6 +103,21 @@ node *insert_abr(node *t, int val)
     return t;
 }
 
+node *search_abr(node *t, int val)
+{
+    if (t == NULL)
+    {
+        return NULL;
+    }
+
+    if (val < t->val)
+    {
+        return search_abr(t->left, val);
+    }
+
+    return insert_abr(t->right, val);
+}
+
 void test_cons_tree()
 {
     node *t;
