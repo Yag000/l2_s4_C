@@ -117,7 +117,9 @@ node *search_abr(node *t, int val)
 
     return insert_abr(t->right, val);
 }
-
+node *max_abr(node *t)
+{
+}
 void test_cons_tree()
 {
     node *t;
