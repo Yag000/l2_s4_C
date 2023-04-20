@@ -10,7 +10,7 @@ void print(paire *p)
     printf("x=%d, y=%d\n", p->x, p->y);
 }
 
-int main()
+int maino()
 {
     int a = 69;
 
