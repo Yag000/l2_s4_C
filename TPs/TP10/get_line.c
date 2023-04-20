@@ -1,19 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include <ctype.h>
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "assert.h"
+#include "ctype.h"
 
-const char *MESSAGE = "Fëanor did nothing wrong!";
-
-void fill(FILE *flux, unsigned n)
+void find(FILE *flux, int n)
 {
+    int last_lie_size;
+    fseek(flux, 0, SEEK_SET);
 
-    for (unsigned i = 0; i < n; i++)
-    {
-        fputs(MESSAGE, flux);
-        fputc('\n', flux);
-    }
+    printf("%ld", ftell(flux));
 }
 
 int main(int argc, char *argv[])
@@ -47,9 +43,7 @@ int main(int argc, char *argv[])
 
     assert(flux != NULL);
 
-    fill(flux, number_of_lines);
+    find(flux, number_of_lines);
 
     fclose(flux);
-
-    return EXIT_SUCCESS;
 }
