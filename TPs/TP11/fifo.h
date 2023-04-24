@@ -14,5 +14,7 @@ struct file
 typedef struct file *fifo;
 
 fifo create_fifo(size_t capacite_init, size_t taille_elem);
-
+void delete_fifo(fifo f);
+int empty_fifo(fifo f);
+void *get_fifo(fifo f, void *element);
 #endif
